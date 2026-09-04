@@ -13,7 +13,7 @@ const answerSchema = {
     properties : {
         answer: {
             type : "string",
-            description : "The answer to the question based on the provided document text. The answer should be concise, accurate, and directly address the question. It should be written in a clear and understandable manner, providing a complete response that reflects the information contained within the document."
+            description : "The answer to the question based on the provided document text. The answer should be concise, accurate, and directly address the question. It should be written in a clear and understandable manner, providing a complete response that reflects the information contained within the document. Do not answer the outside of the topic of that document. If it is the outside of the topic of that document, then answer 'I am sorry, I cannot provide an answer to that question as it is outside the scope of the provided document.'"
         }
     },
     required : ["answer"]  
