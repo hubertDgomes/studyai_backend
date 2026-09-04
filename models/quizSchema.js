@@ -12,11 +12,6 @@ const quizSchema = new mongoose.Schema(
 			ref: "documents",
 			required: true,
 		},
-		questionCount: {
-			type: Number,
-			required: true,
-			min: 1,
-		},
 		questions: [
 			{
 				question: {
@@ -28,6 +23,10 @@ const quizSchema = new mongoose.Schema(
 					required: true,
 				},
 				correctAnswer: {
+					type: String,
+					required: true,
+				},
+				explanation: {
 					type: String,
 					required: true,
 				},
