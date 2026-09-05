@@ -13,7 +13,7 @@ const singupController = async (req, res) => {
     const checkUser = await userSchema.findOne({ email });
     if (checkUser) {
       return res
-        .status(400)
+        .status(409)
         .json({ message: "User has already been registered. Try to log in." });
     }
 
@@ -72,4 +72,9 @@ const logoutController = async (req, res) => {
   return res.status(200).json({message : "Logout Successfully!"})
 }
 
-export default { singupController, loginController, logoutController };
+const getMe = async (req , res) => {
+    const checkUser = await userSchema.findById(req.user.id)
+    return res.status(200).json(checkUser)
+}
+
+export default { singupController, loginController, logoutController, getMe };
