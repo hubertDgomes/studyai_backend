@@ -46,4 +46,13 @@ const getAllDocumentsController = async (req, res) => {
   return res.status(200).json({ getDocs });
 };
 
-export default { documentController, getAllDocumentsController };
+const getDocsById = async (req , res) => {
+  const {id} = req.params
+  const getDocs = await documentsSchema.findById(id).select("-extractedText")
+  if(!getDocs){
+     return res.status(404).json({ message: "The docs not found" });
+  }
+  return res.status(200).json({ getDocs });
+}
+
+export default { documentController, getAllDocumentsController , getDocsById};

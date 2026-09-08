@@ -9,6 +9,7 @@ const documentRouter = express.Router()
 
 documentRouter.post("/docsupload", authUser , upload.single("extractedText"), docs.documentController)
 documentRouter.get("/getdocs" , authUser , docs.getAllDocumentsController)
+documentRouter.get("/getdocs/:id" , authUser , docs.getDocsById)
 documentRouter.post("/questions/:id", authUser, answerController)
 documentRouter.post("/quiz/:id" , authUser , quizController)
 
