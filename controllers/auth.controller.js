@@ -61,7 +61,14 @@ const loginController = async (req, res) => {
       { expiresIn: "7d" },
     );
     res.cookie("token", token);
-    return res.status(200).json({ message: "Login Successfully!" });
+    return res.status(200).json({
+      message: "Login Successfully!",
+      user: {
+        id: checkUser._id,
+        name: checkUser.name,
+        email: checkUser.email,
+      },
+    });
   } catch (err) {
     throw err;
   }
