@@ -14,9 +14,13 @@ const documentSummurySchema = {
         summary: {
             type : "string",
             description : "Summary of the document with the most important points and key takeaways. It should be concise and informative, providing a clear overview of the document's content. also it should be like the mix of paragraph and bullet points. The summary should be written in a way that is easy to understand and provides a clear understanding of the document's main ideas and arguments."
+        },
+        title: {
+            type : "string",
+            description : "Title of the document. It should be concise and informative, providing a clear overview of the document's content."
         }
     },
-    required : ["summary"]  
+    required : ["summary", "title"]  
 }
 
 const generateDocsSummury = async ({pdfText}) => {

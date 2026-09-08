@@ -3,7 +3,7 @@ import generateDocsSummury from "../services/summary.js";
 import documentsSchema from "../models/documentsSchema.js";
 
 const documentController = async (req, res) => {
-      try {
+  try {
     const docsFile = req.file;
     if (!docsFile) {
       return res.status(400).json({
@@ -15,7 +15,9 @@ const documentController = async (req, res) => {
     const docsResult = await parser.getText();
     const docsText = docsResult?.text || "";
 
-    const generatedSummuryWithAi = await generateDocsSummury({ pdfText: docsText });
+    const generatedSummuryWithAi = await generateDocsSummury({
+      pdfText: docsText,
+    });
 
     const newDocs = new documentsSchema({
       userId: req.user.id,
@@ -36,4 +38,12 @@ const documentController = async (req, res) => {
   }
 };
 
-export default documentController;
+const getAllDocumentsController = async (req, res) => {
+  const getDocs = await documentsSchema.find({ userId: req.user.id }).select("-extractedText").sort({createdAt : -1});
+  if (!getDocs) {
+    return res.status(404).json({ message: "The docs not found" });
+  }
+  return res.status(200).json({ getDocs });
+};
+
+export default { documentController, getAllDocumentsController };

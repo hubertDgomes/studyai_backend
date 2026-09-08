@@ -11,6 +11,9 @@ const documentsSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    title: {
+      type: String,
+    },
     summary: {
       type: String,
       default: "",

@@ -1,13 +1,14 @@
 import express from 'express'
 import upload from '../middleware/fileMiddleware.js'
 import authUser from '../middleware/authMiddleware.js'
-import documentController from '../controllers/documents.controller.js'
+import docs from '../controllers/documents.controller.js'
 import answerController from '../controllers/answer.controller.js'
 import quizController from '../controllers/quiz.controller.js'
 const documentRouter = express.Router()
 
 
-documentRouter.post("/docsupload", authUser , upload.single("extractedText"), documentController)
+documentRouter.post("/docsupload", authUser , upload.single("extractedText"), docs.documentController)
+documentRouter.get("/getdocs" , authUser , docs.getAllDocumentsController)
 documentRouter.post("/questions/:id", authUser, answerController)
 documentRouter.post("/quiz/:id" , authUser , quizController)
 
