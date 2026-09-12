@@ -3,6 +3,13 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { Long } from "mongodb";
 
+const COOKIE_OPTIONS = {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    maxAge: 24 * 60 * 60 * 1000
+};
+
 const singupController = async (req, res) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
@@ -31,7 +38,7 @@ const singupController = async (req, res) => {
       process.env.JWT_SECRET_KEY,
       { expiresIn: "7d" },
     );
-    res.cookie("token", token);
+    res.cookie("token", token , COOKIE_OPTIONS);
     return res.status(200).json({ message: "User created!" });
   } catch (err) {
     throw err;
@@ -60,7 +67,7 @@ const loginController = async (req, res) => {
       process.env.JWT_SECRET_KEY,
       { expiresIn: "7d" },
     );
-    res.cookie("token", token);
+    res.cookie("token", token , COOKIE_OPTIONS);
     return res.status(200).json({
       message: "Login Successfully!",
       user: {
