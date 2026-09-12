@@ -42,6 +42,8 @@ dbConnertor()
 app.use("/api" , authRouter)
 app.use("/api/ai", documentRouter)
 
-app.listen(4000,()=> {
-    console.log("The server is running at port 4000");
+const port = process.env.PORT || 4000;
+
+app.listen(port, "0.0.0.0", () => {
+    console.log(`The server is running at port ${port}`);
 })
