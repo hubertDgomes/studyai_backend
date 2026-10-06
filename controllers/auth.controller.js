@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { Long } from "mongodb";
 
 const COOKIE_OPTIONS = {
-    httpOnly: true,
+    httpOnly: false,
     secure: true,
     sameSite: "none",
     maxAge: 24 * 60 * 60 * 1000
@@ -21,7 +21,7 @@ const singupController = async (req, res) => {
     if (checkUser) {
       return res
         .status(409)
-        .json({ message: "User has already been registered. Try to log in." });
+        .json({ message: "User has already been registered. Try to log in." }); 
     }
 
     const hash = await bcrypt.hash(password, 10);
