@@ -4,10 +4,10 @@ import jwt from "jsonwebtoken";
 import { Long } from "mongodb";
 
 const COOKIE_OPTIONS = {
-    httpOnly: false,
-    secure: true,
-    sameSite: "none",
-    maxAge: 24 * 60 * 60 * 1000
+  httpOnly: false,
+  secure: true,
+  sameSite: "none",
+  maxAge: 24 * 60 * 60 * 1000
 };
 
 const singupController = async (req, res) => {
@@ -21,7 +21,7 @@ const singupController = async (req, res) => {
     if (checkUser) {
       return res
         .status(409)
-        .json({ message: "User has already been registered. Try to log in." }); 
+        .json({ message: "User has already been registered. Try to log in." });
     }
 
     const hash = await bcrypt.hash(password, 10);
@@ -38,7 +38,7 @@ const singupController = async (req, res) => {
       process.env.JWT_SECRET_KEY,
       { expiresIn: "7d" },
     );
-    res.cookie("token", token , COOKIE_OPTIONS);
+    res.cookie("token", token, COOKIE_OPTIONS);
     return res.status(200).json({ message: "User created!" });
   } catch (err) {
     throw err;
@@ -67,7 +67,7 @@ const loginController = async (req, res) => {
       process.env.JWT_SECRET_KEY,
       { expiresIn: "7d" },
     );
-    res.cookie("token", token , COOKIE_OPTIONS);
+    res.cookie("token", token, COOKIE_OPTIONS);
     return res.status(200).json({
       message: "Login Successfully!",
       user: {
@@ -82,13 +82,18 @@ const loginController = async (req, res) => {
 };
 
 const logoutController = async (req, res) => {
-  res.clearCookie("token")
-  return res.status(200).json({message : "Logout Successfully!"})
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    path: "/",
+  })
+  return res.status(200).json({ message: "Logout Successfully!" })
 }
 
-const getMe = async (req , res) => {
-    const checkUser = await userSchema.findById(req.user.id)
-    return res.status(200).json(checkUser)
+const getMe = async (req, res) => {
+  const checkUser = await userSchema.findById(req.user.id)
+  return res.status(200).json(checkUser)
 }
 
 export default { singupController, loginController, logoutController, getMe };
