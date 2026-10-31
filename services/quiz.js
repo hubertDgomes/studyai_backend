@@ -9,7 +9,7 @@ const ai = new GoogleGenAI({
 
 
 const quizSchema = {
-    type : "array",
+    type: "array",
     items: {
         type: "object",
         properties: {
@@ -39,7 +39,7 @@ const generateQuiz = async ({ documentText, questionCount }) => {
     const prompt = `You are a document quiz generation expert. Your task is to create a set of ${questionCount} multiple-choice questions based on the provided document text. Each question should have 4 options, with one correct answer and an explanation for the correct answer. The questions should be clear, concise, and directly related to the content of the document. Here is the document text: ${documentText} and also make exactly ${questionCount} questions`;
 
     const response = await ai.models.generateContent({
-        model: "gemini-3.1-flash-lite",
+        model: "gemini-3.6-flash",
         contents: prompt,
         config: {
             responseMimeType: "application/json",

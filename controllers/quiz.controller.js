@@ -4,7 +4,7 @@ import generateQuiz from "../services/quiz.js";
 
 const quizController = async (req, res) => {
   const { id } = req.params;
-  const {questionCount}  = req.body;
+  const { questionCount } = req.body;
 
   const checkDocument = await documentsSchema.findById(id);
   if (!checkDocument) {
@@ -17,6 +17,7 @@ const quizController = async (req, res) => {
     documentText: checkDocument.extractedText,
     questionCount,
   });
+
 
   const newQuiz = new quizSchema({
     userId: req.user.id,
